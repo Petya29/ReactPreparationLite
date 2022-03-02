@@ -1,0 +1,144 @@
+.button {
+    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+}
+
+.button:active {
+    margin-left: 1px 1px 0;
+    box-shadow: -1px -1px 1px #000;
+    outline: 1px solid black;
+}
+
+.button:disabled {
+    opacity: 0.5;
+}
+
+.small {
+    font-size: 12px;
+    padding: 10px 16px;
+}
+
+.medium {
+    font-size: 14px;
+    padding: 11px 20px;
+}
+
+.large {
+    font-size: 16px;
+    padding: 12px 24px;
+}
+
+.inherit,
+.text {
+    background-color: transparent;
+}
+
+.primary {
+    color: white;
+    background-color: #1ea7fd;
+}
+
+.secondary {
+    color: #333;
+    background-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
+}
+
+.success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.error {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.warning {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.outlined:focus {
+    background-color: transparent;
+}
+
+.outlined--primary {
+    background-color: transparent;
+    color: #1ea7fd;
+    border: 1px solid #1ea7fd;
+}
+
+.outlined--primary:hover {
+    background-color: #1ea7fd;
+    color: #ffffff;
+}
+
+.outlined--secondary {
+    color: #333333;
+    background-color: transparent;
+    border: 1px solid #333333;
+}
+
+.outlined--secondary:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.outlined--success {
+    color: #28a745;
+    background-color: transparent;
+    border: 1px solid #28a745;
+}
+
+.outlined--success:hover {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+.outlined--error {
+    color: #dc3545;
+    background-color: transparent;
+    border: 1px solid #dc3545;
+}
+
+.outlined--error:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.outlined--info {
+    color: #17a2b8;
+    background-color: transparent;
+    border: 1px solid #17a2b8;
+}
+
+.outlined--info:hover {
+    background-color: #17a2b8;
+    color: #ffffff;
+}
+
+.outlined--warning {
+    color: #ffc107;
+    background-color: transparent;
+    border: 1px solid #ffc107;
+}
+
+.outlined--warning:hover {
+    background-color: #ffc107;
+    color: #212529;
+}

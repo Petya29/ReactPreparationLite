@@ -1,0 +1,10 @@
+import { render, screen } from "@testing-library/react";
+import AppBar from "./AppBar";
+
+describe('AppBar', () => {
+    it('AppBar renders', () => {
+        render(<AppBar />);
+
+        expect(screen.getByText('SiteName')).toBeInTheDocument();
+    });
+});
