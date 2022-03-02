@@ -15,4 +15,11 @@ describe('Card component', () => {
 
         expect(screen.getByText('children')).toBeInTheDocument();
     });
+
+    it('Card renders with correct props', () => {
+        render(<Card data={mockData}>children</Card>);
+        
+        expect(screen.getByText(mockData.title)).toBeInTheDocument();
+        expect(screen.getByText(mockData.body)).toBeInTheDocument();
+    });
 });
