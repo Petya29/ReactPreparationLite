@@ -16,7 +16,7 @@ const Button: FC<IProps> = ({
     color = 'inherit',
     disabled = false,
     size = 'medium',
-    variant = 'outlined',
+    variant = 'contained',
     onClick,
     children,
     ...props

@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { IPost } from '../../../models/IPost';
 import Button from '../Button/Button';
 import Card from '../Card/Card';
@@ -14,10 +15,6 @@ const List: FC<IProps> = (props) => {
 
     if (!items.length) return null;
 
-    const temp = () => {
-        console.log('asd')
-    }
-
     return (
         <ul className={`collection ${classes.list}`}>
             {items.map(item => (
@@ -26,7 +23,18 @@ const List: FC<IProps> = (props) => {
                     key={item.id}
                 >
                     <Card data={item}>
-                        <Button color='primary' onClick={temp}>Open</Button>
+                        <Button
+                            color='primary'
+                            size='medium'
+                            variant='outlined'
+                        >
+                            <Link
+                                to={`post/${item.id}`}
+                                style={{ color: 'inherit', marginRight: '0px' }}
+                            >
+                                Open
+                            </Link>
+                        </Button>
                     </Card>
                 </li>
             ))}
