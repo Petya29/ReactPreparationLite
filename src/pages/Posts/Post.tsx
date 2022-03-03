@@ -22,16 +22,14 @@ const Post: FC = () => {
       setPost(postResponse.data);
       const userResponse = await UserService.fetchUserById(postResponse.data.user_id);
       setUser(userResponse.data);
-
-      const elems = document.querySelectorAll('.tooltipped');
-      M.Tooltip.init(elems, {});
-      const instance = M.Tooltip.getInstance(elems[0]);
-      instance.destroy()
     } catch (e) {
       console.log(e);
-      const elems = document.querySelectorAll('.tooltipped');
-      M.Tooltip.init(elems, {});
     }
+  }
+
+  const formatUser = () => {
+    if (user.name !== undefined) return `Posted by ${user.name}`;
+    return 'Posted by unknown';
   }
 
   useEffect(() => {
@@ -42,34 +40,29 @@ const Post: FC = () => {
   return (
     <div className='post-view container'>
       <Card
-        data={post}
-        user={user}
+        title={[post.title, formatUser()]}
+        body={post.body}
+        hoverable={true}
         truncateTitle={false}
       >
-        <span
-          className='tooltipped'
-          data-position="bottom"
-          data-tooltip="User is Unknown"
+        <Button
+          color='primary'
+          size='medium'
+          variant='outlined'
+          disabled={user.name === undefined ? true : false}
         >
-          <Button
-            color='primary'
-            size='medium'
-            variant='outlined'
-            disabled={user.name === undefined ? true : false}
-          >
-            {user.id === undefined
-              ?
+          {user.id === undefined
+            ?
+            'Open user'
+            :
+            <Link
+              to='/'
+              style={{ color: 'inherit', marginRight: '0px' }}
+            >
               'Open user'
-              :
-              <Link
-                to='/'
-                style={{ color: 'inherit', marginRight: '0px' }}
-              >
-                Open user
-              </Link>
-            }
-          </Button>
-        </span>
+            </Link>
+          }
+        </Button>
       </Card>
     </div>
   )

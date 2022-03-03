@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter as Router } from "react-router-dom";
 import { IPost } from "../../../models/IPost";
 import List from "./List";
 
@@ -25,7 +26,11 @@ const mockData: IPost[] = [
 
 describe('List component', () => {
     it('List renders', () => {
-        render(<List items={mockData} />);
+        render(
+            <Router>
+                <List items={mockData} />
+            </Router>
+        );
 
         expect(screen.getByRole('list')).toBeInTheDocument();
     });

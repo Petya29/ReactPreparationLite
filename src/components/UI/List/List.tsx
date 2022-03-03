@@ -22,7 +22,12 @@ const List: FC<IProps> = (props) => {
                     className={`collection-item ${classes.listItem}`}
                     key={item.id}
                 >
-                    <Card data={item}>
+                    <Card
+                        title={item.title}
+                        body={item.body}
+                        hoverable={true}
+                        truncateTitle={true}
+                    >
                         <Button
                             color='primary'
                             size='medium'

@@ -1,21 +1,21 @@
 import React, { FC } from 'react';
-import { IPost } from '../../../models/IPost';
-import { IUser } from '../../../models/IUser';
 import classes from './Card.module.css';
 
 interface IProps {
-    data: IPost,
-    user?: IUser,
+    title?: string | string[],
+    body?: string | string[],
     truncateTitle?: boolean,
+    hoverable?: boolean,
     children?: JSX.Element | JSX.Element[] | string
 }
 
 const Card: FC<IProps> = (props) => {
 
     const {
-        data,
-        user,
+        title,
+        body,
         truncateTitle = true,
+        hoverable = false,
         children
     } = props;
 
@@ -23,13 +23,24 @@ const Card: FC<IProps> = (props) => {
         <div className={`row ${classes.cardWrap}`}>
             <div className="col s12 m2"></div>
             <div className="col s12 m8">
-                <div className={`card blue-grey hoverable ${classes.card}`}>
+                <div className={`card blue-grey ${hoverable ? 'hoverable' : ''} ${classes.card}`}>
                     <div className="card-content white-text">
-                        {user &&
-                        <span className='card-title'>Posted by {user.name ? user.name : 'unknown'}</span>
+                        {Array.isArray(title)
+                            ?
+                            title.map((el, i) => (
+                                <span className={`card-title ${truncateTitle ? 'truncate' : ''}`} key={i}>{el}</span>
+                            ))
+                            :
+                            <span className={`card-title ${truncateTitle ? 'truncate' : ''}`}>{title}</span>
                         }
-                        <span className={`card-title ${truncateTitle ? 'truncate' : ''}`}>{data.title}</span>
-                        <p>{data.body}</p>
+                        {Array.isArray(body)
+                            ?
+                            body.map(el => (
+                                <p key={el}>{el}</p>
+                            ))
+                            :
+                            <p>{body}</p>
+                        }
                     </div>
                     <div className="card-action">
                         {children}
