@@ -1,10 +1,9 @@
-import { act, cleanup, findAllByRole, findByRole, render, screen } from "@testing-library/react";
+import { act, cleanup, findAllByRole, render, screen } from "@testing-library/react";
 import axios from "axios";
 import Home from "./Home";
 
 afterEach(cleanup);
 
-// jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const hits = [
@@ -46,6 +45,7 @@ describe('Home view', () => {
             render(<Home />);
         });
 
+        screen.debug();
         expect(screen.getByRole('list')).toBeInTheDocument();
 
         const items = await findAllByRole(screen.getByRole('list'), 'listitem');
