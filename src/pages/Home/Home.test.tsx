@@ -1,4 +1,5 @@
 import { act, cleanup, findAllByRole, render, screen } from "@testing-library/react";
+import { MemoryRouter as Router } from "react-router-dom";
 import axios from "axios";
 import Home from "./Home";
 
@@ -32,7 +33,11 @@ describe('Home view', () => {
         mockedAxios.get.mockResolvedValueOnce({ data: hits });
 
         await act(async () => {
-            render(<Home />);
+            render(
+                <Router>
+                    <Home />
+                </Router>
+            );
         });
 
         expect(mockedAxios.get).toHaveBeenCalledTimes(1);
@@ -42,10 +47,13 @@ describe('Home view', () => {
         mockedAxios.get.mockResolvedValueOnce({ data: hits });
 
         await act(async () => {
-            render(<Home />);
+            render(
+                <Router>
+                    <Home />
+                </Router>
+            );
         });
 
-        screen.debug();
         expect(screen.getByRole('list')).toBeInTheDocument();
 
         const items = await findAllByRole(screen.getByRole('list'), 'listitem');
