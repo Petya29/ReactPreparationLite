@@ -29,6 +29,20 @@ describe('Button component', () => {
         expect(container.firstChild).toHaveAttribute('disabled');
     });
 
+    it('Button color if works', () => {
+        const { container } = render(
+            <Button
+                variant="outlined"
+                size="large"
+                disabled
+            >
+                children
+            </Button>
+        );
+        
+        expect(container.firstChild).toHaveClass('inherit');
+    });
+
     it('Button onClick works', () => {
         render(
             <Button
