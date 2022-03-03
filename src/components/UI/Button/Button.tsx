@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 import classes from './Button.module.css';
 
 interface IProps {
-    color?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | string,
+    color?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning',
     disabled?: boolean,
     size?: 'small' | 'medium' | 'large',
-    variant?: 'outlined' | 'text' | string,
+    variant?: 'outlined' | 'contained',
     onClick?: () => void,
     children?: JSX.Element | string,
 }
