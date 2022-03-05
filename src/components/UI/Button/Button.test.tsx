@@ -1,4 +1,4 @@
-import { fireEvent, userEvent } from "@storybook/testing-library";
+import { fireEvent } from "@storybook/testing-library";
 import { render, screen } from "@testing-library/react";
 import Button from "./Button";
 

@@ -23,10 +23,14 @@ const hits = [
 ]
 
 describe('Home view', () => {
-    it('Home view renders', () => {
-        const { container } = render(<Home />);
+    it('Home view renders', async () => {
+        await act(async () => {
+            const { container } = render(
+                <Home />
+            );
 
-        expect(container.firstChild).toBeInTheDocument();
+            expect(container.firstChild).toBeInTheDocument();
+        });
     });
 
     it('Home fetch posts from API', async () => {
