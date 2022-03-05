@@ -23,14 +23,20 @@ const hitsUser = {
 }
 
 describe('Post view', () => {
-    it('Post view renders', () => {
-        const { container } = render(<Post />);
+    it('Post view renders', async () => {
+        await act(async () => {
+            const { container } = render(<Post />);
 
-        expect(container.firstChild).toBeInTheDocument();
+            expect(container.firstChild).toBeInTheDocument();
+        });
     });
 
-    it('Post pass correct props', () => {
-        render(<Post />);
+    it('Post pass correct props', async () => {
+        await act(async () => {
+            render(
+                <Post />
+            );
+        });
 
         expect(screen.getByText('Posted by unknown')).toBeInTheDocument();
     });
