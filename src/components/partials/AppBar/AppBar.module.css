@@ -1,4 +1,24 @@
-.navWrapper {
+.logo {
+    margin: 0 !important;
+    cursor: pointer; 
+}
+.menu li,
+.mobileMenu {
+    width: 70px;
     text-align: center;
-    background-color: rgb(50, 50, 224);
+    cursor: pointer; 
+}
+.menu li:hover {
+    background-color: #8d9ba199 !important;
+}
+.mobileMenu {
+    display: none !important;
+}
+@media screen and (max-width: 768px) {
+    .menu {
+        display: none;
+    }
+    .mobileMenu {
+        display: block !important;
+    }
 }

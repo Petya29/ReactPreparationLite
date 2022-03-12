@@ -9,20 +9,82 @@ Object {
         class="App"
       >
         <div
-          class="navbar-fixed"
+          class="navBarContainer"
         >
           <nav
-            class="navWrapper"
+            class="navBar"
+            style="position: fixed; display: flex; justify-content: space-around; align-items: center;"
           >
-            <div>
-              <a
-                aria-current="page"
-                class="brand-logo active"
-                href="/"
+            <h4
+              class="logo"
+            >
+              SiteName
+            </h4>
+            <ul
+              class="menu"
+            >
+              <li
+                class="waves-effect"
               >
-                SiteName
-              </a>
-            </div>
+                <a
+                  aria-current="page"
+                  class="active"
+                  href="/"
+                >
+                  Posts
+                </a>
+              </li>
+              <li
+                class="waves-effect"
+              >
+                <a
+                  aria-current="page"
+                  class="active"
+                  href="/"
+                >
+                  graphQL
+                </a>
+              </li>
+            </ul>
+            <i
+              class="
+                    large
+                    material-icons
+                    waves-effect
+                    dropdown-trigger
+                    mobileMenu
+                "
+              data-target="mobileMenu"
+            >
+              menu
+            </i>
+            <ul
+              class="dropdown-content"
+              id="mobileMenu"
+            >
+              <li
+                class="waves-effect"
+              >
+                <a
+                  aria-current="page"
+                  class="active"
+                  href="/"
+                >
+                  Posts
+                </a>
+              </li>
+              <li
+                class="waves-effect"
+              >
+                <a
+                  aria-current="page"
+                  class="active"
+                  href="/"
+                >
+                  graphQL
+                </a>
+              </li>
+            </ul>
           </nav>
         </div>
         <div
@@ -36,20 +98,82 @@ Object {
       class="App"
     >
       <div
-        class="navbar-fixed"
+        class="navBarContainer"
       >
         <nav
-          class="navWrapper"
+          class="navBar"
+          style="position: fixed; display: flex; justify-content: space-around; align-items: center;"
         >
-          <div>
-            <a
-              aria-current="page"
-              class="brand-logo active"
-              href="/"
+          <h4
+            class="logo"
+          >
+            SiteName
+          </h4>
+          <ul
+            class="menu"
+          >
+            <li
+              class="waves-effect"
             >
-              SiteName
-            </a>
-          </div>
+              <a
+                aria-current="page"
+                class="active"
+                href="/"
+              >
+                Posts
+              </a>
+            </li>
+            <li
+              class="waves-effect"
+            >
+              <a
+                aria-current="page"
+                class="active"
+                href="/"
+              >
+                graphQL
+              </a>
+            </li>
+          </ul>
+          <i
+            class="
+                    large
+                    material-icons
+                    waves-effect
+                    dropdown-trigger
+                    mobileMenu
+                "
+            data-target="mobileMenu"
+          >
+            menu
+          </i>
+          <ul
+            class="dropdown-content"
+            id="mobileMenu"
+          >
+            <li
+              class="waves-effect"
+            >
+              <a
+                aria-current="page"
+                class="active"
+                href="/"
+              >
+                Posts
+              </a>
+            </li>
+            <li
+              class="waves-effect"
+            >
+              <a
+                aria-current="page"
+                class="active"
+                href="/"
+              >
+                graphQL
+              </a>
+            </li>
+          </ul>
         </nav>
       </div>
       <div
