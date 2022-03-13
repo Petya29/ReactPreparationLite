@@ -3,7 +3,7 @@ import classes from './Card.module.css';
 
 interface IProps {
     title?: string | string[],
-    body?: string | string[],
+    body?: string | string[] | JSX.Element,
     truncateTitle?: boolean,
     hoverable?: boolean,
     children?: JSX.Element | JSX.Element[] | string
