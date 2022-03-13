@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import AppRouter from './components/utilities/AppRouter/AppRouter';
 import { BrowserRouter as Router } from 'react-router-dom';
+import AppRouter from './components/utilities/AppRouter/AppRouter';
+import AppBar from './components/partials/AppBar/AppBar';
 import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import './styles/App.css';
-import AppBar from './components/partials/AppBar/AppBar';
 
 function App() {
 

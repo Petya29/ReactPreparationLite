@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/index.css';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import App from './App';
+import './styles/index.css';
 import reportWebVitals from './reportWebVitals';
 
+const client = new ApolloClient({
+  uri: 'https://api.spacex.land/graphql/',
+  cache: new InMemoryCache(),
+});
+
 ReactDOM.render(
-  <React.Fragment>
+  <ApolloProvider client={client}>
     <App />
-  </React.Fragment>,
+  </ApolloProvider>,
   document.getElementById('root')
 );
 

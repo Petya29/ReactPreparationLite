@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Home from "../pages/Home/Home";
 import Post from "../pages/Posts/Post";
+import Ships from "../pages/Ships/Ships";
 import User from "../pages/User/User";
 
 interface IRoute {
@@ -24,5 +25,10 @@ export const routes: IRoute[] = [
         id: 3,
         path: 'user/:id',
         element: User
+    },
+    {
+        id: 4,
+        path: 'ships',
+        element: Ships
     }
 ];

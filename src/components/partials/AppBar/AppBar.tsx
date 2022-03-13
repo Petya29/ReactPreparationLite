@@ -19,10 +19,12 @@ const AppBar: FC = () => {
                 alignItems: 'center'
             }}
         >
-            <h4 className={classes.logo}>SiteName</h4>
+            <h4 className={classes.logo}>
+                <NavLink to='/'>SiteName</NavLink>
+            </h4>
             <ul className={classes.menu}>
                 <li className='waves-effect'><NavLink to='/'>Posts</NavLink></li>
-                <li className='waves-effect'><NavLink to='/'>graphQL</NavLink></li>
+                <li className='waves-effect'><NavLink to='/ships'>Ships</NavLink></li>
             </ul>
             <i
                 className={`
@@ -38,7 +40,7 @@ const AppBar: FC = () => {
             </i>
             <ul id='mobileMenu' className='dropdown-content'>
                 <li className='waves-effect'><NavLink to='/'>Posts</NavLink></li>
-                <li className='waves-effect'><NavLink to='/'>graphQL</NavLink></li>
+                <li className='waves-effect'><NavLink to='/ships'>Ships</NavLink></li>
             </ul>
         </NavBar>
     )
