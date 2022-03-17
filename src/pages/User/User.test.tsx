@@ -1,7 +1,9 @@
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
 import axios from "axios";
 import User from "./User";
+import { setupStore } from "../../store";
 
 afterEach(cleanup);
 
@@ -15,13 +17,17 @@ const hits = {
     status: 'active'
 }
 
+const store = setupStore();
+
 describe('User view', () => {
     it('User view renders', async () => {
         await act(async () => {
             const { container } = render(
-                <Router>
-                    <User />
-                </Router>
+                <Provider store={store}>
+                    <Router>
+                        <User />
+                    </Router>
+                </Provider>
             );
 
             expect(container.firstChild).toBeInTheDocument();
@@ -31,9 +37,11 @@ describe('User view', () => {
     it('User back navigation works', async () => {
         await act(async () => {
             render(
-                <Router>
-                    <User />
-                </Router>
+                <Provider store={store}>
+                    <Router>
+                        <User />
+                    </Router>
+                </Provider>
             );
 
             fireEvent.click(screen.getByText('Back'));
@@ -45,13 +53,17 @@ describe('User view', () => {
 
         await act(async () => {
             render(
-                <Router>
-                    <User />
-                </Router>
+                <Provider store={store}>
+                    <Router>
+                        <User />
+                    </Router>
+                </Provider>
             );
         });
 
-        expect(screen.getByText(new RegExp(hits.name, 'i'))).toBeInTheDocument();
-        expect(mockedAxios.get).toHaveBeenCalledTimes(1);
+        const state = store.getState().user;
+
+        expect(mockedAxios.get).toHaveBeenCalled();
+        expect(state.users).toEqual([hits]);
     });
 });

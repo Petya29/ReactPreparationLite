@@ -1,60 +1,69 @@
-import React, { FC, useState, useEffect, useRef, Fragment } from 'react';
+import React, { FC, Fragment, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Alert from '../../components/UI/Alert/Alert';
 import Button from '../../components/UI/Button/Button';
 import Card from '../../components/UI/Card/Card';
 import Loader from '../../components/UI/Loader/Loader';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { IPost } from '../../models/IPost';
 import { IUser } from '../../models/IUser';
-import PostService from '../../services/PostServise';
-import UserService from '../../services/UserService';
+import { fetchPosts } from '../../store/posts/ActionCreators';
+import { fetchUserByID } from '../../store/users/ActionCreators';
 
 const Post: FC = () => {
 
   const { id } = useParams();
 
+  const dispatch = useAppDispatch();
+
+  const { posts, isPostLoading, } = useAppSelector(state => state.post);
+  const { users, isUserLoading, isUserError } = useAppSelector(state => state.user);
+
   const [post, setPost] = useState<IPost>({} as IPost);
-  const [user, setUser] = useState<IUser>({} as IUser);
-  const [error, setError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<IUser>({
+    id: null,
+    name: 'unknown',
+    email: 'unknown',
+    gender: 'unknown',
+    status: 'unknown'
+  } as IUser);
 
-  let fetchInfo = useRef(async () => { });
-  fetchInfo.current = async () => {
-    try {
-      setIsLoading(true);
-      setError(false);
-
-      const postResponse = await PostService.fetchPost(id);
-      setPost(postResponse.data);
-      const userResponse = await UserService.fetchUserById(postResponse.data.user_id);
-      setUser(userResponse.data);
-    } catch (e) {
-      console.log(e);
-      setError(true);
-    } finally {
-      setIsLoading(false);
-    }
+  let findPost = useRef(async () => { });
+  findPost.current = async () => {
+    if (!posts.length) await dispatch(fetchPosts(1));
+    posts.forEach(el => {
+      if (String(el.id) === id) setPost(el);
+    });
   }
 
-  const formatUser = () => {
-    if (user.name !== undefined) return `Posted by ${user.name}`;
-    return 'Posted by unknown';
+  let findUser = useRef(async () => { });
+  findUser.current = async () => {
+    if (!users.length) return await dispatch(fetchUserByID(post.user_id));
+    for (let i = 0; i < users.length; i++) {
+      if (post.user_id === users[i].id) {
+        return setUser(users[i]);
+      }
+    }
+    dispatch(fetchUserByID(post.user_id));
   }
 
   useEffect(() => {
-    fetchInfo.current();
-  }, [])
+    findPost.current();
+  }, [posts]);
 
+  useEffect(() => {
+    if (post.user_id) findUser.current();
+  }, [post, users]);
 
   return (
     <div className='post-view container'>
-      {isLoading
+      {isPostLoading || isUserLoading
         ?
         <Loader centered />
         :
         <Fragment>
-          {error &&
+          {isUserError &&
             <Alert
               color='error'
               style={{
@@ -66,7 +75,7 @@ const Post: FC = () => {
             </Alert>
           }
           <Card
-            title={[post.title, formatUser()]}
+            title={[post.title, `Posted by ${user.name}`]}
             body={post.body}
             hoverable={true}
             truncateTitle={false}
@@ -75,14 +84,14 @@ const Post: FC = () => {
               color='primary'
               size='medium'
               variant='outlined'
-              disabled={user.name === undefined ? true : false}
+              disabled={user.id === null}
             >
-              {user.id === undefined
+              {user.id === null
                 ?
                 'Open user'
                 :
                 <Link
-                  to={`/user/${id}`}
+                  to={`/user/${post.user_id}`}
                   style={{ color: 'inherit', marginRight: '0px' }}
                 >
                   Open user

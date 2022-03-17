@@ -4,47 +4,44 @@ import Alert from '../../components/UI/Alert/Alert';
 import Button from '../../components/UI/Button/Button';
 import Card from '../../components/UI/Card/Card';
 import Loader from '../../components/UI/Loader/Loader';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { IUser } from '../../models/IUser';
-import UserService from '../../services/UserService';
+import { fetchUserByID } from '../../store/users/ActionCreators';
 
 const User: FC = () => {
 
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const dispatch = useAppDispatch();
+
+    const { users, isUserLoading, isUserError } = useAppSelector(state => state.user);
+
     const [user, setUser] = useState<IUser>({} as IUser);
-    const [error, setError] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    let fetchUser = useRef(async () => { });
-    fetchUser.current = async () => {
-        try {
-            setIsLoading(true);
-            setError(false);
-
-            const response = await UserService.fetchUserById(id);
-            setUser(response.data);
-        } catch (e) {
-            console.log(e);
-            setError(true);
-        } finally {
-            setIsLoading(false);
+    let findUser = useRef(async () => { });
+    findUser.current = async () => {
+        if (!users.length) return await dispatch(fetchUserByID(id));
+        for (let i = 0; i < users.length; i++) {
+          if (id === String(users[i].id)) {
+            return setUser(users[i]);
+          }
         }
+        dispatch(fetchUserByID(id));
     }
 
     useEffect(() => {
-        fetchUser.current();
-    }, [])
-
+        findUser.current();
+    }, [users]);
 
     return (
         <div className="user-view container">
-            {isLoading
+            {isUserLoading
                 ?
                 <Loader centered />
                 :
                 <Fragment>
-                    {error &&
+                    {isUserError &&
                         <Alert
                             color='error'
                             style={{

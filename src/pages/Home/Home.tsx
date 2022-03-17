@@ -1,45 +1,32 @@
-import React, { FC, useEffect, useState, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import Alert from '../../components/UI/Alert/Alert';
 import List from '../../components/UI/List/List';
 import Loader from '../../components/UI/Loader/Loader';
-import { IPost } from '../../models/IPost';
-import PostService from '../../services/PostServise';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { fetchPosts } from '../../store/posts/ActionCreators';
 
 const Home: FC = () => {
+    const dispatch = useAppDispatch();
 
-    const [posts, setPosts] = useState<IPost[]>([]);
-    const [page, setPage] = useState<number>(1);
-    const [error, setError] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { posts, page, isPostLoading, isPostError } = useAppSelector(state => state.post);
 
-    let fetchPosts = useRef(async () => { });
-    fetchPosts.current = async () => {
-        try {
-            setIsLoading(true);
-            setError(false);
-
-            const response = await PostService.fetchPosts(page, 5);
-            setPosts(response.data);
-        } catch (e) {
-            console.log(e);
-            setError(true);
-        } finally {
-            setIsLoading(false);
-        }
+    let getPosts = useRef(() => { });
+    getPosts.current = () => {
+        if (!posts.length) dispatch(fetchPosts(page));
     }
 
     useEffect(() => {
-        fetchPosts.current();
-    }, [setPage]);
+        getPosts.current();
+    }, []);
 
 
     return (
         <div className='home-view container'>
-            {isLoading &&
+            {isPostLoading &&
                 <Loader centered />
             }
             <List items={posts} />
-            {error &&
+            {isPostError &&
                 <Alert color='error'>Something went wrong</Alert>
             }
         </div>

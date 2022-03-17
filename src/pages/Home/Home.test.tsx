@@ -1,7 +1,9 @@
 import { act, cleanup, findAllByRole, render, screen } from "@testing-library/react";
 import { MemoryRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
 import axios from "axios";
 import Home from "./Home";
+import { setupStore } from "../../store";
 
 afterEach(cleanup);
 
@@ -22,15 +24,17 @@ const hits = [
     }
 ]
 
-describe('Home view', () => {
-    it('Home view renders', async () => {
-        await act(async () => {
-            const { container } = render(
-                <Home />
-            );
+const store = setupStore();
 
-            expect(container.firstChild).toBeInTheDocument();
-        });
+describe('Home view', () => {
+    it('Home view renders', () => {
+        const { container } = render(
+            <Provider store={store}>
+                <Home />
+            </Provider>
+        );
+
+        expect(container.firstChild).toHaveClass('home-view');
     });
 
     it('Home fetch posts from API', async () => {
@@ -38,13 +42,18 @@ describe('Home view', () => {
 
         await act(async () => {
             render(
-                <Router>
-                    <Home />
-                </Router>
+                <Provider store={store}>
+                    <Router>
+                        <Home />
+                    </Router>
+                </Provider>
             );
         });
 
+        const state = store.getState().post;
+
         expect(mockedAxios.get).toHaveBeenCalledTimes(1);
+        expect(state.posts).toEqual(hits);
     });
 
     it('Home displays fetching data', async () => {
@@ -52,9 +61,11 @@ describe('Home view', () => {
 
         await act(async () => {
             render(
-                <Router>
-                    <Home />
-                </Router>
+                <Provider store={store}>
+                    <Router>
+                        <Home />
+                    </Router>
+                </Provider>
             );
         });
 
