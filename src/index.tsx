@@ -5,6 +5,8 @@ import App from './App';
 import './styles/index.css';
 import reportWebVitals from './reportWebVitals';
 import { offsetLimitPagination } from '@apollo/client/utilities';
+import { setupStore } from './store';
+import { Provider } from 'react-redux';
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -14,16 +16,20 @@ const cache = new InMemoryCache({
       }
     }
   }
-})
+});
 
 const client = new ApolloClient({
   uri: 'https://api.spacex.land/graphql/',
   cache: cache,
 });
 
+const store = setupStore();
+
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </ApolloProvider>,
   document.getElementById('root')
 );

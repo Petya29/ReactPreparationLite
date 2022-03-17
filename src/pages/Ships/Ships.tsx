@@ -6,7 +6,6 @@ import Loader from '../../components/UI/Loader/Loader';
 import { GET_ALL_SHIPS } from '../../query/Ship';
 import { IShip } from '../../models/IShip';
 import Card from '../../components/UI/Card/Card';
-import { useRef } from '@storybook/addons';
 
 const Ships: FC = () => {
 
