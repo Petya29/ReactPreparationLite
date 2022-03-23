@@ -8,8 +8,8 @@ import Loader from '../../components/UI/Loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { IPost } from '../../models/IPost';
 import { IUser } from '../../models/IUser';
-import { fetchPosts } from '../../store/posts/ActionCreators';
-import { fetchUserByID } from '../../store/users/ActionCreators';
+import { getPosts } from '../../store/posts/postSlice';
+import { getUser } from '../../store/users/userSlice';
 
 const Post: FC = () => {
 
@@ -31,21 +31,21 @@ const Post: FC = () => {
 
   let findPost = useRef(async () => { });
   findPost.current = async () => {
-    if (!posts.length) await dispatch(fetchPosts(1));
+    if (!posts.length) await dispatch(getPosts(1));
     posts.forEach(el => {
       if (String(el.id) === id) setPost(el);
     });
   }
 
-  let findUser = useRef(async () => { });
+  let findUser = useRef(() => { });
   findUser.current = async () => {
-    if (!users.length) return await dispatch(fetchUserByID(post.user_id));
+    if (!users.length) return await dispatch(getUser(post.user_id));
     for (let i = 0; i < users.length; i++) {
       if (post.user_id === users[i].id) {
         return setUser(users[i]);
       }
     }
-    dispatch(fetchUserByID(post.user_id));
+    dispatch(getUser(post.user_id));
   }
 
   useEffect(() => {

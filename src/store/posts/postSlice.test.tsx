@@ -1,5 +1,12 @@
 import { setupStore } from "..";
-import { postsFetching, postsFetchingError, postsFetchingSuccess } from "./postSlice";
+import reducer, { getPosts } from "./postSlice";
+
+const initialState = {
+    posts: [],
+    page: 1,
+    isPostLoading: false,
+    isPostError: false
+}
 
 const postMock = [{
     id: 1703,
@@ -21,10 +28,10 @@ describe('postSlice', () => {
         });
     });
 
-    it('postsFetching change state', () => {
-        store.dispatch(postsFetching());
+    it('sets loading to true when posts are pending', () => {
+        const action = { type: getPosts.pending.type };
 
-        const state = store.getState().post;
+        const state = reducer(initialState, action);
 
         expect(state).toEqual({
             posts: [],
@@ -34,24 +41,29 @@ describe('postSlice', () => {
         });
     });
 
-    it('postsFetchingSuccess change state', () => {
-        store.dispatch(postsFetchingSuccess(postMock));
+    it('sets loading to false and error to true when posts are rejected', () => {
+        const action = { type: getPosts.rejected.type };
 
-        const state = store.getState().post;
+        const state = reducer(initialState, action);
 
         expect(state).toEqual({
-            posts: postMock,
+            posts: [],
+            page: 1,
+            isPostLoading: false,
+            isPostError: true
+        });
+    });
+
+    it('sets posts to state when posts are fulfilled', () => {
+        const action = { type: getPosts.fulfilled.type, payload: { ...postMock } };
+
+        const state = reducer(initialState, action);
+        
+        expect(state).toEqual({
+            posts: { ...postMock },
             page: 1,
             isPostLoading: false,
             isPostError: false
         });
-    });
-
-    it('postsFetchingError change state', () => {
-        store.dispatch(postsFetchingError());
-        
-        const state = store.getState().post;
-        
-        expect(state.isPostError).toEqual(true);
     });
 });

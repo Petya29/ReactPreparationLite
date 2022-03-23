@@ -4,8 +4,8 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import User from "./User";
 import { setupStore } from "../../store";
-
-afterEach(cleanup);
+import reducer from "../../store/users/userSlice";
+import { createStore } from "@reduxjs/toolkit";
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
@@ -17,9 +17,18 @@ const hits = {
     status: 'active'
 }
 
+const initialState = {
+    users: [{ ...hits }],
+    isUserLoading: false,
+    isUserError: false
+}
+
 const store = setupStore();
 
 describe('User view', () => {
+
+    afterEach(cleanup);
+
     it('User view renders', async () => {
         await act(async () => {
             const { container } = render(

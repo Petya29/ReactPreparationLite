@@ -6,7 +6,7 @@ import Card from '../../components/UI/Card/Card';
 import Loader from '../../components/UI/Loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { IUser } from '../../models/IUser';
-import { fetchUserByID } from '../../store/users/ActionCreators';
+import { getUser } from '../../store/users/userSlice';
 
 const User: FC = () => {
 
@@ -19,15 +19,15 @@ const User: FC = () => {
 
     const [user, setUser] = useState<IUser>({} as IUser);
 
-    let findUser = useRef(async () => { });
+    let findUser = useRef(() => { });
     findUser.current = async () => {
-        if (!users.length) return await dispatch(fetchUserByID(id));
+        if (!users.length) return await dispatch(getUser(id));
         for (let i = 0; i < users.length; i++) {
-          if (id === String(users[i].id)) {
-            return setUser(users[i]);
-          }
+            if (id === String(users[i].id)) {
+                return setUser(users[i]);
+            }
         }
-        dispatch(fetchUserByID(id));
+        dispatch(getUser(id));
     }
 
     useEffect(() => {

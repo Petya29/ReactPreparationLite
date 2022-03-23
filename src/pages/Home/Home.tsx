@@ -3,20 +3,20 @@ import Alert from '../../components/UI/Alert/Alert';
 import List from '../../components/UI/List/List';
 import Loader from '../../components/UI/Loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchPosts } from '../../store/posts/ActionCreators';
+import { getPosts } from '../../store/posts/postSlice';
 
 const Home: FC = () => {
     const dispatch = useAppDispatch();
 
     const { posts, page, isPostLoading, isPostError } = useAppSelector(state => state.post);
 
-    let getPosts = useRef(() => { });
-    getPosts.current = () => {
-        if (!posts.length) dispatch(fetchPosts(page));
+    let findPosts = useRef(() => { });
+    findPosts.current = () => {
+        if (!posts.length) dispatch(getPosts(page));
     }
 
     useEffect(() => {
-        getPosts.current();
+        findPosts.current();
     }, []);
 
 
