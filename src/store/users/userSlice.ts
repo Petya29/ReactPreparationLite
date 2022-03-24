@@ -19,6 +19,7 @@ export const getUser = createAsyncThunk(
     async (id: string | number | undefined, { rejectWithValue }): Promise<any> => {
         try {
             const response = await axios.get<IUser>(`${process.env.REACT_APP_BASE_API_URL}users/${id}`);
+            console.log(response.data);
             return response.data;
         } catch (e: any) {
             return rejectWithValue(e?.response?.data?.message || 'User not found');

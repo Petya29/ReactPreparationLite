@@ -52,8 +52,8 @@ describe('Post view', () => {
     });
 
     it('Post fetch data from API', async () => {
-        mockedAxios.get.mockResolvedValueOnce({ data: hitsPost });
-        mockedAxios.get.mockResolvedValueOnce({ data: hitsUser });
+        mockedAxios.get.mockResolvedValueOnce({ data: hitsPost }).mockResolvedValueOnce({ data: hitsUser });
+        //mockedAxios.get.mockResolvedValueOnce({ data: hitsUser });
 
         await act(async () => {
             render(

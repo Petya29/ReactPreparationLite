@@ -21,6 +21,7 @@ export const getPosts = createAsyncThunk(
     async function (page: number, { rejectWithValue }): Promise<any> {
         try {
             const response = await axios.get<IPost[]>(`${process.env.REACT_APP_BASE_API_URL}posts?page=${page}`);
+            console.log(response.data);
             return response.data;
         } catch (e: any) {
             return rejectWithValue(e?.response?.data?.message || 'Something going wrong');
