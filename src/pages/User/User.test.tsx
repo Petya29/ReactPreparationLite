@@ -4,8 +4,6 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import User from "./User";
 import { setupStore } from "../../store";
-import reducer from "../../store/users/userSlice";
-import { createStore } from "@reduxjs/toolkit";
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
@@ -74,5 +72,21 @@ describe('User view', () => {
 
         expect(mockedAxios.get).toHaveBeenCalled();
         expect(state.users).toEqual([hits]);
+    });
+
+    it('User error handling works', async () => {
+        mockedAxios.get.mockRejectedValueOnce(new Error('User not found'));
+
+        await act(async () => {
+            render(
+                <Provider store={store}>
+                    <Router>
+                        <User />
+                    </Router>
+                </Provider>
+            );
+        });
+
+        expect(screen.getByText('User not found')).toBeInTheDocument();
     });
 });
