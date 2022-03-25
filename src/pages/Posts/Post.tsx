@@ -20,11 +20,6 @@ const Post: FC = () => {
   const { posts, isPostLoading, } = useAppSelector(state => state.post);
   const { users, isUserLoading, isUserError } = useAppSelector(state => state.user);
 
-  console.log('rendering');
-
-  console.log(posts);
-  console.log(users);
-
   const [post, setPost] = useState<IPost>({} as IPost);
   const [user, setUser] = useState<IUser>({
     id: null,

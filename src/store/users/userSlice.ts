@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../../models/IUser";
-import axios from 'axios';
+import { AxiosResponse } from 'axios';
+import { getUserAPI } from "../../services/UserService";
+import { IUserResponse } from "../../models/responses/IUserResponse";
 
 interface IUserSlice {
     users: IUser[],
@@ -16,10 +18,9 @@ const initialState: IUserSlice = {
 
 export const getUser = createAsyncThunk(
     'user/getUser',
-    async (id: string | number | undefined, { rejectWithValue }): Promise<any> => {
+    async (id: string | number | undefined, { rejectWithValue }): Promise<AxiosResponse<IUserResponse> | any> => {
         try {
-            const response = await axios.get<IUser>(`${process.env.REACT_APP_BASE_API_URL}users/${id}`);
-            console.log(response.data);
+            const response = await getUserAPI(id);
             return response.data;
         } catch (e: any) {
             return rejectWithValue(e?.response?.data?.message || 'User not found');
@@ -48,4 +49,4 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const {} = userSlice.actions;
+// export const {} = userSlice.actions;

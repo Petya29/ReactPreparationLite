@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import { AxiosResponse } from "axios";
 import { IPost } from "../../models/IPost";
+import { IPostsResponse } from "../../models/responses/IPostsResponse";
+import { getPostsAPI } from "../../services/PostService";
 
 interface IPostState {
     posts: IPost[],
@@ -18,10 +20,9 @@ const initialState: IPostState = {
 
 export const getPosts = createAsyncThunk(
     'posts/getPosts',
-    async function (page: number, { rejectWithValue }): Promise<any> {
+    async function (page: number, { rejectWithValue }): Promise<AxiosResponse<IPostsResponse> | any> {
         try {
-            const response = await axios.get<IPost[]>(`${process.env.REACT_APP_BASE_API_URL}posts?page=${page}`);
-            console.log(response.data);
+            const response = await getPostsAPI(page);
             return response.data;
         } catch (e: any) {
             return rejectWithValue(e?.response?.data?.message || 'Something going wrong');
@@ -50,4 +51,4 @@ export const postSlice = createSlice({
 });
 
 export default postSlice.reducer;
-export const {} = postSlice.actions;
+// export const {} = postSlice.actions;
